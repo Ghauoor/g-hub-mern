@@ -14,10 +14,10 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [sortType, setSortType] = useState("fork");
 
-  const getUserProfileAndRepos = useCallback(async () => {
+  const getUserProfileAndRepos = useCallback(async (userName = "Ghauoor") => {
     setLoading(true);
     try {
-      const userRes = await fetch(`https://api.github.com/users/Ghauoor`);
+      const userRes = await fetch(`https://api.github.com/users/${userName}`);
       const userProfile = await userRes.json();
       setUserProfile(userProfile);
       const reposRes = await fetch(userProfile.repos_url);
@@ -25,25 +25,37 @@ const HomePage = () => {
       setRepos(repos);
       setLoading(false);
 
-      console.log(
-        "User profile and repos fetched successfully",
-        userProfile,
-        repos
-      );
+      return { userProfile, repos };
     } catch (error) {
       toast.error(error.message || "Error fetching user profile and repos");
     } finally {
       setLoading(false);
     }
   }, []);
+  const onSearch = async (e, username) => {
+    e.preventDefault();
+    setLoading(true);
+    setRepos([]);
+    setUserProfile(null);
+    try {
+      const { userProfile, repos } = await getUserProfileAndRepos(username);
+      setUserProfile(userProfile);
+      setRepos(repos);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message || "Error fetching user profile and repos");
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     getUserProfileAndRepos();
   }, [getUserProfileAndRepos]);
 
   return (
     <div className="m-4">
-      <Search />
-      <SortRepos />
+      <Search onSearch={onSearch} />
+      {repos && <SortRepos sortType={sortType} />}
       <div className="flex gap-4 flex-col lg:flex-row justify-center items-start">
         {userProfile && !loading && <ProfileInfo userProfile={userProfile} />}
         {repos && !loading && <Repos repos={repos} />}
