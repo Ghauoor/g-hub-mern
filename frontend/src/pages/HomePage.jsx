@@ -12,12 +12,16 @@ const HomePage = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [repos, setRepos] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [sortType, setSortType] = useState("fork");
+  const [sortType, setSortType] = useState("recent");
 
   const getUserProfileAndRepos = useCallback(async (userName = "Ghauoor") => {
     setLoading(true);
     try {
-      const userRes = await fetch(`https://api.github.com/users/${userName}`);
+      const userRes = await fetch(`https://api.github.com/users/${userName}`, {
+        headers: {
+          authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+        },
+      });
       const userProfile = await userRes.json();
       setUserProfile(userProfile);
       const reposRes = await fetch(userProfile.repos_url);
@@ -40,6 +44,7 @@ const HomePage = () => {
     try {
       const { userProfile, repos } = await getUserProfileAndRepos(username);
       setUserProfile(userProfile);
+      setSortType("recent");
       setRepos(repos);
     } catch (error) {
       console.error(error);
@@ -48,6 +53,17 @@ const HomePage = () => {
       setLoading(false);
     }
   };
+  const onSort = (sortType) => {
+    if (sortType === "recent") {
+      repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); //descending, recent first
+    } else if (sortType === "stars") {
+      repos.sort((a, b) => b.stargazers_count - a.stargazers_count); //descending, most stars first
+    } else if (sortType === "forks") {
+      repos.sort((a, b) => b.forks_count - a.forks_count); //descending, most forks first
+    }
+    setSortType(sortType);
+    setRepos([...repos]);
+  };
   useEffect(() => {
     getUserProfileAndRepos();
   }, [getUserProfileAndRepos]);
@@ -55,7 +71,7 @@ const HomePage = () => {
   return (
     <div className="m-4">
       <Search onSearch={onSearch} />
-      {repos && <SortRepos sortType={sortType} />}
+      {repos && <SortRepos sortType={sortType} onSort={onSort} />}
       <div className="flex gap-4 flex-col lg:flex-row justify-center items-start">
         {userProfile && !loading && <ProfileInfo userProfile={userProfile} />}
         {repos && !loading && <Repos repos={repos} />}
