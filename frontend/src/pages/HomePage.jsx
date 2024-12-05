@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+=======
+import { useCallback, useState } from "react";
+import { useEffect } from "react";
+
+import { toast } from "react-hot-toast";
+>>>>>>> 0397f0d (clean all the imports)
 
 import ProfileInfo from "../components/ProfileInfo";
 import Repos from "../components/Repos";
@@ -23,8 +30,12 @@ const HomePage = () => {
       repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); //descending, recent first
 
       setRepos(repos);
+<<<<<<< HEAD
       setUserProfile(userProfile);
 
+=======
+      setLoading(false);
+>>>>>>> 0397f0d (clean all the imports)
       return { userProfile, repos };
     } catch (error) {
       toast.error(error.message);

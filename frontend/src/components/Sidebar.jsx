@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
-import { IoHomeSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
+import { IoHomeSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import { MdEditDocument } from "react-icons/md";
 import { MdOutlineExplore } from "react-icons/md";
 import { PiSignInBold } from "react-icons/pi";
-import { MdEditDocument } from "react-icons/md";
+
 import Logout from "./Logout";
 import { useAuthContext } from "../context/AuthContext";
 

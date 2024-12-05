@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
@@ -6,6 +7,22 @@ import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import LikesPage from "./pages/LikesPage";
+=======
+import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
+import ExplorePage from "./pages/ExplorePage";
+import HomePage from "./pages/HomePage";
+import LikesPage from "./pages/LikesPage";
+import LoginPage from "./pages/LoginPage";
+import Sidebar from "./components/Sidebar";
+import SignUpPage from "./pages/SignUpPage";
+
+export default function App() {
+  return (
+    <div className="flex text-white">
+      <Sidebar />
+>>>>>>> 0397f0d (clean all the imports)
 
 import Sidebar from "./components/Sidebar";
 import { useAuthContext } from "./context/AuthContext";

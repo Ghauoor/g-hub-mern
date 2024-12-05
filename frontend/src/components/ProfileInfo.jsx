@@ -1,12 +1,13 @@
-import { IoLocationOutline } from "react-icons/io5";
 import {
   RiGitRepositoryFill,
   RiUserFollowFill,
   RiUserFollowLine,
 } from "react-icons/ri";
-import { FaXTwitter } from "react-icons/fa6";
-import { TfiThought } from "react-icons/tfi";
 import { FaEye } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { IoLocationOutline } from "react-icons/io5";
+import { TfiThought } from "react-icons/tfi";
+
 import { formatMemberSince } from "../utils/functions";
 import LikeProfile from "./LikeProfile";
 
