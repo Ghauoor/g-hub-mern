@@ -3,9 +3,10 @@ import { IoSearch } from "react-icons/io5";
 
 const Search = ({ onSearch }) => {
   const [username, setUsername] = useState("");
+
   return (
     <form
-      className="max-w-xl mx-auto p-2 sm:w-72"
+      className="max-w-xl mx-auto p-2"
       onSubmit={(e) => onSearch(e, username)}
     >
       <label
@@ -37,5 +38,4 @@ const Search = ({ onSearch }) => {
     </form>
   );
 };
-
 export default Search;
